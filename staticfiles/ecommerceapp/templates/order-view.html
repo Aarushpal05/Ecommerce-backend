@@ -1,0 +1,86 @@
+{% extends "header.html" %}
+
+{% block 'content' %}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">My Orders</h2>
+
+    {% if orders %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total Price</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.user.username }}</td>
+
+                        <td>₹{{ order.total_price }}</td>
+                        <td>{{ order.payment_method }}</td>
+
+                        <td>
+                            {% if order.status == "Pending" %}
+                                <span class="badge bg-warning text-dark">
+                                    {{ order.status }}
+                                </span>
+
+                            {% elif order.status == "Completed" %}
+                                <span class="badge bg-success">
+                                    {{ order.status }}
+                                </span>
+
+                            {% elif order.status == "Cancelled" %}
+                                <span class="badge bg-danger">
+                                    {{ order.status }}
+                                </span>
+
+                            {% else %}
+                                <span class="badge bg-secondary">
+                                    {{ order.status }}
+                                </span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ order.created_at|date:"d M Y, h:i A" }}</td>
+
+                        <!-- Right Side Buttons -->
+                        <td>
+                            <a href="{% url 'order_item' order.id %}" class="btn btn-warning btn-sm">
+                                order items
+                            </a>
+
+                            <a href="{% url 'delete_order' order.id %}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete?')">
+                                Delete
+                            </a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+        <div class="alert alert-info text-center">
+            No orders found.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

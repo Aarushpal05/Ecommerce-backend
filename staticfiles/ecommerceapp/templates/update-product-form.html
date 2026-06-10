@@ -1,0 +1,93 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block 'content' %}
+
+<div class="container">
+
+   <div class="row"> 
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
+        <div class="card">
+        <div class="card-header bg-light">
+            <h3>Product Details !!!</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Category</label><br>
+                    <select class="form-control" name="category">
+                        <option selected value='{{data.category.id}}'>{{data.category}}</option>
+                        {% for x in categories %}
+                        <option value={{x.id}}>{{x.name}}</option>
+                        {% endfor %}
+
+                    </select>
+                
+                </div>
+                <!-- Name -->
+                <div class="mb-3">
+                    <label class="form-label">Product Name</label><br>
+                    <input type="text" name="name" value={{data.name}} class="form-control">
+                
+                </div>
+
+                <!-- Price -->
+                <div class="mb-3">
+                    <label class="form-label">Price</label><br>
+                    <input type="text" name="price" value={{data.price}} class="form-control">
+                    
+                </div>
+
+                <!-- Selling Price -->
+                <div class="mb-3">
+                    <label class="form-label">Selling Price</label><br>
+                    <input type="text" name="selling_price" value={{data.selling_price}} class="form-control">
+                
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label">Description</label><br>
+                    <textarea name="description" class="form-control">{{data.description}}</textarea>            
+                </div>
+
+                <!-- Image -->
+                <div class="mb-3">
+                    <img src='{{data.pic.url}}' width= 100 height=100>
+                    <label class="form-label">Product Image</label><br>
+                    <input type="file" name="pic" class="form-control">
+            
+                </div>
+
+
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-success">Update Product</button>
+                
+
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-3"></div>
+
+</div>
+
+
+    
+</div>
+
+</body>
+</html>
+
+
+                    
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
